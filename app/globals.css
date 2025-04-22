@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+@layer base {
+  :root {
+    --color-main: oklch(67.47% 0.1726 259.49);
+    --color-background: oklch(93.46% 0.0305 255.11);
+    --color-secondary-background: oklch(100% 0 0);
+    --color-foreground: oklch(0% 0 0);
+    --color-main-foreground: oklch(0% 0 0);
+    --color-border: oklch(0% 0 0);
+    --color-overlay: oklch(0% 0 0 / 0.8);
+    --color-ring: oklch(0% 0 0);
+    --shadow-shadow: 4px 4px 0px 0px var(--color-border);
+
+    --radius-base: 10px;
+  }
+
+  .dark {
+    --color-background: oklch(29.23% 0.0626 270.49);
+    --color-secondary-background: oklch(23.93% 0 0);
+    --color-foreground: oklch(92.49% 0 0);
+    --color-main-foreground: oklch(0% 0 0);
+    --color-main: oklch(67.47% 0.1726 259.49);
+    --color-border: oklch(0% 0 0);
+    --color-ring: oklch(100% 0 0);
+    --shadow-shadow: 4px 4px 0px 0px var(--color-border);
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s infinite;
+}
+
+/* Mobile navigation overlay */
+.mobile-nav-overlay {
+  @apply fixed inset-0 bg-background/80 backdrop-blur-sm z-40;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.mobile-nav-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-nav {
+  @apply fixed top-0 left-0 w-full max-w-xs h-full bg-white border-r border-border z-50 p-6 transform -translate-x-full transition-transform duration-300 ease-in-out;
+}
+
+.mobile-nav.open {
+  transform: translateX(0);
+}
+
+/* Project card hover effect */
+.project-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Tech tag hover effect */
+.tech-tag {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.tech-tag:hover {
+  transform: scale(1.05);
+}
+
+/* Neobrutalism styles */
+.neo-button {
+  @apply bg-main border-2 border-black shadow-neo hover:translate-y-1 hover:shadow-none transition-all font-bold;
+}
+
+.neo-card {
+  @apply bg-secondary-background border-2 border-black shadow-neo hover:translate-y-1 hover:translate-x-1 hover:shadow-none transition-all;
+}
+
+.neo-section {
+  @apply border-b-2 border-black pb-4;
+}
+
+.neo-input {
+  @apply bg-secondary-background border-2 border-black shadow-neo focus:shadow-none focus:translate-x-1 focus:translate-y-1 transition-all;
+}
+
+/* Scroll indicator animation */
+@keyframes mouse-wheel {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+}
+
+@keyframes mouse-scroll {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.mouse-wheel {
+  animation: mouse-wheel 0.6s linear infinite;
+}
+
+.mouse-scroll {
+  animation: mouse-scroll 1s infinite;
+}
