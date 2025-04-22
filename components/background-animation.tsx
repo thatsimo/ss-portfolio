@@ -89,6 +89,27 @@ export default function BackgroundAnimation() {
       mouseActive = false
     }
 
+    // Add device motion support for mobile shaking
+    const handleDeviceMotion = (event: DeviceMotionEvent) => {
+      const acceleration = event.accelerationIncludingGravity;
+      if (acceleration) {
+        const shakeThreshold = 15; // Adjust this threshold as needed
+
+        const shakeX = Math.abs(acceleration.x || 0) > shakeThreshold;
+        const shakeY = Math.abs(acceleration.y || 0) > shakeThreshold;
+        const shakeZ = Math.abs(acceleration.z || 0) > shakeThreshold;
+
+        if (shakeX || shakeY || shakeZ) {
+          // Apply random velocity to shapes on shake
+          shapes.forEach((shape) => {
+            shape.velocityX += (Math.random() - 0.5) * 20;
+            shape.velocityY += (Math.random() - 0.5) * 20;
+            shape.velocityZ += (Math.random() - 0.5) * 20;
+          });
+        }
+      }
+    };
+
     // Event listeners
     window.addEventListener("resize", handleResize)
     window.addEventListener("mousemove", handleMouseMove)
@@ -96,6 +117,7 @@ export default function BackgroundAnimation() {
     window.addEventListener("mouseenter", handleMouseEnter)
     window.addEventListener("touchmove", handleTouchMove)
     window.addEventListener("touchend", handleTouchEnd)
+    window.addEventListener("devicemotion", handleDeviceMotion)
 
     // Neobrutalism color palette - more vibrant and high contrast
     const colors = [
@@ -478,6 +500,7 @@ export default function BackgroundAnimation() {
       window.removeEventListener("mouseenter", handleMouseEnter)
       window.removeEventListener("touchmove", handleTouchMove)
       window.removeEventListener("touchend", handleTouchEnd)
+      window.removeEventListener("devicemotion", handleDeviceMotion)
     }
   }, [])
 
